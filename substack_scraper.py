@@ -7,6 +7,7 @@ class SubstackScraper():
     def get_post_content(self, url: str) -> list[str]:
         parsed_html = self.get_url_html(url)
         cleaned_text = self.scrape_post_content(parsed_html)
+        print(f"Parsed post content from {url} successfully: {cleaned_text}")
         return cleaned_text
 
     def get_url_html(self, url: str) -> BeautifulSoup:
