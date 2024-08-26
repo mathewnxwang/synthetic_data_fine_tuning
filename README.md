@@ -9,7 +9,8 @@ Fine tuning a LLM model can improve instruction adherence and inference costs. O
 ### Synthetic training data generation
 
 I put together a small seed dataset of question/response pairs using content from [Benn Stancil's Substack blog](https://benn.substack.com/).
-The questions were manually curated from excerpts from his articles - those excerpts are considered the responses.  
+The questions were manually curated from excerpts from his articles - those excerpts are considered the responses.
+
 To scale that dataset up, I used a LLM to generate additional questions using the seed dataset as guidance. Instead of manually extracting article excerpts, those were automatically scraped from Benn's blog using `BeautifulSoup`.
 I did a final review of the training dataset to ensure good data quality and removed question/responses that weren't useful.
 
