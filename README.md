@@ -16,8 +16,8 @@ I did a final review of the training dataset and removed question/responses that
 
 ### Fine tuning
 
-I wrangled the training data into a format that the OpenAI fine tuning API accepts before uploading it to the files API and starting the fine tuning job with a simple API call.
-Once it finished, I can call the fine tuned model easily by passing its name into the `model` parameter of the chat completions API.
+I wrangled the training data into the required format, uploaded it to the files API and started the fine tuning job with another simple API call.
+Once the job finished, I can call the fine tuned model by passing its name into the `model` parameter of the chat completions API.
 
 # How to run
 
