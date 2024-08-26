@@ -37,7 +37,7 @@ class SyntheticDataGenerator:
         
         data_dicts = [{"input": case.input, "output": case.output} for case in conversation_dataset]
         df = pd.DataFrame(data_dicts)
-        df.to_csv('conversation_dataset.csv', index=False, encoding='utf-8')
+        df.to_csv('data/conversation_dataset.csv', index=False, encoding='utf-8')
         print(f"Generated synthetic conversation inputs and saved them to a local csv file.")
 
         return conversation_dataset
