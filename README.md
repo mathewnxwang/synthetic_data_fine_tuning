@@ -12,7 +12,7 @@ I put together a small seed dataset of question/response pairs using content fro
 The questions were manually curated from excerpts from his articles - those excerpts are considered the responses.
 
 To scale that dataset up, I used a LLM to generate additional questions using the seed dataset as guidance. Article excerpts were automatically scraped from Benn's blog using `BeautifulSoup` instead of manually extracted.
-I did a final review of the training dataset to ensure good data quality and removed question/responses that weren't useful.
+I did a final review of the training dataset and removed question/responses that weren't useful to ensure good data quality.
 
 ### Fine tuning
 
