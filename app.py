@@ -1,27 +1,24 @@
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+from llm_manager import LLMManager
 
-def get_model_response(model, user_input):
-    return "This is a response from the model."
+app = Flask(__name__)
+llm_manager = LLMManager()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    models = [
-        'gpt-4o-mini-base',
-        'gpt-4o-mini-few-shot',
-        'gpt-4o-mini-fine-tuned'
-    ]
+    models = ['zero_shot', 'few_shot', 'fine_tuned']
     model1_response = ""
     model2_response = ""
 
     if request.method == 'POST':
+        print("POST request received")
         user_input = request.form.get('user_input')
         model1 = request.form.get('model1')
         model2 = request.form.get('model2')
 
-        model1_response = get_model_response(model1, user_input)
-        model2_response = get_model_response(model2, user_input)
+        model1_response = llm_manager.get_benn_llm_response(model1, user_input)
+        model2_response = llm_manager.get_benn_llm_response(model2, user_input)
     
     return render_template(
         'index.html',

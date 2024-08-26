@@ -1,41 +1,72 @@
 import os
+import json
 from dotenv import load_dotenv
 from enum import Enum
 
 from openai import OpenAI
 from openai.types.chat.chat_completion import ChatCompletion
 
-
 class LLMModel(Enum):
-    GPT_4O = 'gpt-4o'
-    FINE_TUNED_4O_MINI = 'ft:gpt-4o-mini-2024-07-18:personal::A0GUU7RH'
+    GPT_4O_MINI = 'gpt-4o-mini-2024-07-18'
+    GPT_4O_MINI_FINE_TUNED = 'ft:gpt-4o-mini-2024-07-18:personal::A0GUU7RH'
 
 
 class LLMManager():
-    def __init__(self, model: LLMModel = LLMModel.GPT_4O):
-        self.model = model.value
-
+    def __init__(self):
         load_dotenv("secrets.env")
         openai_api_key = os.getenv("OPENAI_API_KEY")
         print("openai_api_key should be defined and this should print before the error")
         print(openai_api_key)
         self.client = OpenAI(api_key=openai_api_key)
 
-    def call_llm(self, system_prompt: str, user_prompt: str, temperature: float = 0) -> str:
+    def get_benn_llm_response(self, model_version: str, user_input: str) -> str:
+
+        system_prompt = "You are Benn Stancil."
+
+        if model_version == 'zero_shot':
+            model = LLMModel.GPT_4O_MINI
+            user_prompt = "Answer the following question in the style of Benn Stancil: " + user_input
+        
+        elif model_version == 'few_shot':
+            model = LLMModel.GPT_4O_MINI
+            
+            with open('data/seed_examples.json', 'r', encoding='utf-8') as file:
+                examples = json.load(file)
+            
+            few_shot_prompt = ""
+            for example in examples:
+                few_shot_prompt += f"Question: {example['input']}\nResponse: {example['output']}\n\n"
+
+            user_prompt = f"""{few_shot_prompt}
+Answer the following question in the style of Benn Stancil. Question: {user_input}
+Response: """
+            print(f"few shot user prompt: {user_prompt}")
+
+        elif model_version == 'fine_tuned':
+            model = LLMModel.GPT_4O_MINI_FINE_TUNED
+            user_prompt = "Answer the following question in the style of Benn Stancil: " + user_input
+
+        else:
+            raise ValueError("Invalid model version. Please choose 'zero_shot', 'few_shot', or 'fine_tuned'.")
+
+        return self.call_llm(model, system_prompt, user_prompt)
+
+    def call_llm(
+            self,
+            model: LLMModel,
+            system_prompt: str,
+            user_prompt: str,
+            temperature: float = 0
+        ) -> str:
         print(f"Calling LLM with system prompt: {system_prompt}\n\nUser prompt: {user_prompt}")
         response: ChatCompletion = self.client.chat.completions.create(
             messages=[
-                # {"role": "system", "content": system_prompt},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
             ],
-            model=self.model,
+            model=model.value,
             temperature=temperature
         )
         message = response.choices[0].message.content
         print(response)
         return message
-
-llm_manager = LLMManager(model=LLMModel.FINE_TUNED_4O_MINI)
-system_prompt = "You are Benn Stancil."
-user_prompt = "Answer the following question in the style of Benn Stancil: I have $100, what should I spend it on"
-print(llm_manager.call_llm(system_prompt, user_prompt))

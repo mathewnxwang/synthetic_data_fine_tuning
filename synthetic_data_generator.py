@@ -50,7 +50,7 @@ class SyntheticDataGenerator:
         print(f"Chunked content successfully: {chunks}")
         return chunks
 
-    def import_seed_examples(self, file_path: str) -> list[ConversationData]:
+    def import_seed_examples(file_path: str) -> list[ConversationData]:
         with open(file_path, 'r', encoding='utf-8') as file:
             examples = json.load(file)
         
@@ -62,7 +62,7 @@ class SyntheticDataGenerator:
         print(f"Imported seed examples succesfully: {structured_examples}")
         return structured_examples
 
-    def format_seed_examples(self, seed_examples: list[ConversationData]) -> str:
+    def format_seed_examples(seed_examples: list[ConversationData]) -> str:
         formatted_examples = ""
         for example in seed_examples:
             formatted_examples += f"Conversation response: {example.output}\nConversation prompt: {example.input}\n\n"
