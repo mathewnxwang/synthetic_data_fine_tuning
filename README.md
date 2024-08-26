@@ -1,7 +1,7 @@
 # Intro
 
-This repo contains the code to generate synthetic data for fine tuning an OpenAI model and creating a simple Flask app to inspect the results.
-Specifically, it fine tunes an OpenAI LLM model to respond like Benn Stancil, one of my favorite writers.
+This repo contains the code to generate synthetic data for fine tuning an OpenAI LLM model and creating a simple Flask app to inspect the results.
+Specifically, it fine tunes a model to respond like Benn Stancil, one of my favorite writers.
 Fine tuning a LLM model can improve instruction adherence and inference costs. OpenAI has a [great explanation](https://platform.openai.com/docs/guides/optimizing-llm-accuracy/fine-tuning) of when LLM fine tuning is useful.
 
 # Design
