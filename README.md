@@ -1,21 +1,21 @@
 # Intro
 
-This repo contains the code to generate synthetic data for fine tuning an OpenAI model and creating a simple app to inspect the results.
+This repo contains the code to generate synthetic data for fine tuning an OpenAI model and creating a simple Flask app to inspect the results.
+Specifically, it fine tunes an OpenAI LLM model to respond like Benn Stancil, one of my favorite writers.
 Fine tuning a LLM model can improve instruction adherence and inference costs. OpenAI has a [great explanation](https://platform.openai.com/docs/guides/optimizing-llm-accuracy/fine-tuning) of when LLM fine tuning is useful.
 
 # Design
 
 ### Synthetic training data generation
 
-First I put together a small seed dataset of question/response pairs using content from [Benn Stancil's Substack blog](https://benn.substack.com/).
-The responses are self-contained excerpts from his articles and the questions are backed out from them.  
-From that seed dataset I used a LLM to generate additional questions based on automatically scraped excerpts from Benn's blog using `BeautifulSoup`.
-To ensure good data quality, I did a final review of the training dataset to ensure good data quality and removed question/responses that weren't useful.
+I put together a small seed dataset of question/response pairs using content from [Benn Stancil's Substack blog](https://benn.substack.com/).
+The questions were manually curated from excerpts from his articles - those excerpts are considered the responses.  
+To scale that dataset up, I used a LLM to generate additional questions using the seed dataset as guidance. Instead of manually extracting article excerpts, those were automatically scraped from Benn's blog using `BeautifulSoup`.
+I did a final review of the training dataset to ensure good data quality and removed question/responses that weren't useful.
 
 ### Fine tuning
 
-First I wrangled the training data into a format that the OpenAI fine tuning API accepts.
-I uploaded the training data with the files API and then start the fine tuning job.
+I wrangled the training data into a format that the OpenAI fine tuning API accepts before uploading it to the files API and starting the fine tuning job with a simple API call.
 Once it's done, I can call the fine tuned model simply by passing its name into the `model` parameter of the chat completions API.
 
 # How to run
