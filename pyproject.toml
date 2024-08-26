@@ -13,6 +13,7 @@ openai = "^1.40.3"
 python-dotenv = "^1.0.1"
 pandas = "^2.2.2"
 tiktoken = "^0.7.0"
+flask = "^3.0.3"
 
 
 [tool.poetry.group.dev.dependencies]

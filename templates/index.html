@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Model Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .model-select {
+            margin-bottom: 20px;
+        }
+        .response-pane {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            height: 150px;
+            overflow-y: auto;
+        }
+        .input-pane {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compare LLM Model Responses</h1>
+        <form method="POST">
+            <div class="input-pane">
+                <textarea name="user_input" rows="4" style="width: 100%;" placeholder="Enter your input here..."></textarea>
+            </div>
+            <div class="model-select">
+                <label for="model1">Select Model 1:</label>
+                <select name="model1" id="model1">
+                    {% for model in models %}
+                        <option value="{{ model }}">{{ model }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="response-pane">
+                <h3>Model 1 Response:</h3>
+                <p>{{ model1_response }}</p>
+            </div>
+            <div class="model-select">
+                <label for="model2">Select Model 2:</label>
+                <select name="model2" id="model2">
+                    {% for model in models %}
+                        <option value="{{ model }}">{{ model }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="response-pane">
+                <h3>Model 2 Response:</h3>
+                <p>{{ model2_response }}</p>
+            </div>
+            <button type="submit">Compare Responses</button>
+        </form>
+    </div>
+</body>
+</html>
