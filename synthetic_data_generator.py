@@ -1,10 +1,16 @@
 import json
 import pandas as pd
+from pydantic import BaseModel
 
 from llm_manager import LLMManager
-from object_resource import ConversationData
 from substack_scraper import SubstackScraper
 from prompts import CONVERSATION_INPUT_GENERATOR_SYSTEM_PROMPT, CONVERSATION_INPUT_GENERATOR_USER_PROMPT
+
+
+class ConversationData(BaseModel):
+    input: str
+    output: str
+
 
 class SyntheticDataGenerator:
 
@@ -19,7 +25,7 @@ class SyntheticDataGenerator:
 
         conversation_dataset = []
         for url in urls:
-            paragraphs = self.substack_scraper.get_post_content(url)
+            paragraphs: list[str] = self.substack_scraper.get_post_content(url)
             chunks = self.chunk_content(paragraphs)
 
             for chunk in chunks:
@@ -35,7 +41,7 @@ class SyntheticDataGenerator:
                     ConversationData(input=conversation_input, output=chunk)
                 )
         
-        data_dicts = [{"input": case.input, "output": case.output} for case in conversation_dataset]
+        data_dicts = [{"input": example.input, "output": example.output} for example in conversation_dataset]
         df = pd.DataFrame(data_dicts)
         df.to_csv('data/conversation_dataset.csv', index=False, encoding='utf-8')
         print(f"Generated synthetic conversation inputs and saved them to a local csv file.")
@@ -43,6 +49,10 @@ class SyntheticDataGenerator:
         return conversation_dataset
 
     def chunk_content(self, paragraphs: list[str]) -> list[str]:
+        """
+        Chunk every 3 paragraphs together with a 2 paragraph sliding window.
+        Every sequential chunk should have 1 overlapping paragraph.
+        """
         chunks = []
         for i in range(0, len(paragraphs) - 2, 2):
             chunks.append(paragraphs[i] + paragraphs[i+1] + paragraphs[i+2])
@@ -54,10 +64,7 @@ class SyntheticDataGenerator:
         with open(file_path, 'r', encoding='utf-8') as file:
             examples = json.load(file)
         
-        structured_examples = []
-        for example in examples:
-            structured_example = ConversationData(input=example['input'], output=example['output'])
-            structured_examples.append(structured_example)
+        structured_examples = [ConversationData(input=example['input'], output=example['output']) for example in examples]
 
         print(f"Imported seed examples succesfully: {structured_examples}")
         return structured_examples

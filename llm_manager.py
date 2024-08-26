@@ -8,7 +8,7 @@ from openai.types.chat.chat_completion import ChatCompletion
 
 class LLMModel(Enum):
     GPT_4O_MINI = 'gpt-4o-mini-2024-07-18'
-    GPT_4O_MINI_FINE_TUNED = 'ft:gpt-4o-mini-2024-07-18:personal::A0GUU7RH'
+    GPT_4O_MINI_FINE_TUNED = 'ft:gpt-4o-mini-2024-07-18:personal::9zcykjvH'
 
 
 class LLMManager():
