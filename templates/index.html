@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM Model Comparison</title>
+    <title>LLM Response Inspector</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,33 +40,33 @@
 </head>
 <body>
     <div class="container">
-        <h1>Compare LLM Model Responses</h1>
+        <h1>LLM Response Inspector</h1>
         <form method="POST">
             <div class="input-pane">
-                <textarea name="user_input" rows="4" style="width: 100%;" placeholder="Enter your input here..."></textarea>
+                <textarea name="user_input" rows="4" style="width: 100%;" placeholder="Enter your input here...">{{ user_input }}</textarea>
             </div>
             <div class="model-select">
                 <label for="model1">Select Model 1:</label>
                 <select name="model1" id="model1">
                     {% for model in models %}
-                        <option value="{{ model }}">{{ model }}</option>
+                        <option value="{{ model }}" {% if model == model1_input %}selected{% endif %}>{{ model }}</option>
                     {% endfor %}
                 </select>
             </div>
+            <h3>Model 1 Response:</h3>
             <div class="response-pane">
-                <h3>Model 1 Response:</h3>
                 <p>{{ model1_response }}</p>
             </div>
             <div class="model-select">
                 <label for="model2">Select Model 2:</label>
                 <select name="model2" id="model2">
                     {% for model in models %}
-                        <option value="{{ model }}">{{ model }}</option>
+                        <option value="{{ model }}" {% if model == model2_input %}selected{% endif %}>{{ model }}</option>
                     {% endfor %}
                 </select>
             </div>
+            <h3>Model 2 Response:</h3>
             <div class="response-pane">
-                <h3>Model 2 Response:</h3>
                 <p>{{ model2_response }}</p>
             </div>
             <button type="submit">Compare Responses</button>
