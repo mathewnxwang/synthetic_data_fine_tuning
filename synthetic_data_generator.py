@@ -16,7 +16,7 @@ class SyntheticDataGenerator:
 
     def __init__(self):
         self.llm_manager = LLMManager()
-        self.substack_scraper = SubstackScraper()
+        self.scraper = SubstackScraper()
 
     def generate_conversation_inputs(self, urls: list[str]) -> list[ConversationData]:
 
@@ -25,7 +25,7 @@ class SyntheticDataGenerator:
 
         conversation_dataset = []
         for url in urls:
-            paragraphs: list[str] = self.substack_scraper.get_post_content(url)
+            paragraphs: list[str] = self.scraper.get_post_content(url)
             chunks = self.chunk_content(paragraphs)
 
             for chunk in chunks:

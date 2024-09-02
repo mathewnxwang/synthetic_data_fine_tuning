@@ -10,7 +10,7 @@ class TrainingDataFormatter:
 
         with open(output_path, 'w', encoding='utf-8') as file:
             for example in all_data:
-                json_line = json.dumps(example)
+                json_line = json.dumps(example, ensure_ascii=False)
                 file.write(json_line + '\n')
 
     def format_labeled_data(self, file_path: str) -> list[dict]:

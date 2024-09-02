@@ -8,6 +8,6 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=openai_api_key)
 client.files.create(
-  file=open("data/final_finetuning_data.jsonl", "rb"),
+  file=open("data/finetuning_data_unicode_fix.jsonl", "rb"),
   purpose="fine-tune"
 )

@@ -7,8 +7,8 @@ from openai import OpenAI
 from openai.types.chat.chat_completion import ChatCompletion
 
 class LLMModel(Enum):
-    GPT_4O_MINI = 'gpt-4o-mini-2024-07-18'
-    GPT_4O_MINI_FINE_TUNED = 'ft:gpt-4o-mini-2024-07-18:personal::9zcykjvH'
+    GPT_4O_MINI = 'gpt-4o-2024-08-06'
+    GPT_4O_MINI_FINE_TUNED = 'ft:gpt-4o-2024-08-06:personal::A0LwpzoC'
 
 
 class LLMManager():
@@ -40,7 +40,6 @@ class LLMManager():
             user_prompt = f"""{few_shot_prompt}
 Answer the following question in the style of Benn Stancil. Question: {user_input}
 Response: """
-            print(f"few shot user prompt: {user_prompt}")
 
         elif model_version == 'fine_tuned':
             model = LLMModel.GPT_4O_MINI_FINE_TUNED

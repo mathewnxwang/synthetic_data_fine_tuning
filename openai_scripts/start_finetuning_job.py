@@ -8,6 +8,6 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=openai_api_key)
 client.fine_tuning.jobs.create(
-  training_file="file-GYma4luGkdoWKKmPX4yHRrMc", 
+  training_file="file-YXY7ieew6m2IzMJaDtaLH0bE", 
   model="gpt-4o-2024-08-06"
 )
