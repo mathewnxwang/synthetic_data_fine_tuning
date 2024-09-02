@@ -43,7 +43,7 @@ Response: """
 
         elif model_version == 'fine_tuned':
             model = LLMModel.GPT_4O_MINI_FINE_TUNED
-            user_prompt = "Answer the following question in the style of Benn Stancil: " + user_input
+            user_prompt = "Answer the following question in the style of Benn Stancil. Do not repeat yourself over and over again: " + user_input
 
         else:
             raise ValueError("Invalid model version. Please choose 'zero_shot', 'few_shot', or 'fine_tuned'.")
@@ -64,7 +64,8 @@ Response: """
                 {"role": "user", "content": user_prompt}
             ],
             model=model.value,
-            temperature=temperature
+            temperature=temperature,
+            max_tokens=300
         )
         message = response.choices[0].message.content
         print(response)
