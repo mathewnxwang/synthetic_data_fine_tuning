@@ -19,14 +19,4 @@ I did a final review of the training dataset and removed question/responses that
 I wrangled the training data into the required format, uploaded it to the files API and started the fine tuning job with another API call.
 Once the job finished, I can call the fine tuned model by passing its name into the `model` parameter of the chat completions API.
 
-# How to run
-
-* clone the repo locally
-* install `poetry`, a dependency/virtual environment manager
-* navigate to the repo directory and run `poetry install` to install dependencies
-* create or copy your OpenAI api key from https://platform.openai.com/api-keys
-* create a `secrets.env` file and add `OPENAI_API_KEY=<your OpenAI api key here>` to it
-* run the flask app with the command `python app.py` in terminal
-* go to http://127.0.0.1:5000 in your local browser to interact with the app!
-
 
